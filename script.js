@@ -14,12 +14,26 @@ const productList = document.getElementById("product-list");
 
 // Render product list
 function renderProducts() {
+  productList.innerHTML = "";
   products.forEach((product) => {
     const li = document.createElement("li");
-    li.innerHTML = `${product.name} - $${product.price} <button class="add-to-cart-btn" data-id="${product.id}">Add to Cart</button>`;
+    li.innerHTML = `
+      ${product.name} - $${product.price}
+      <button class="add-to-cart-btn" data-id="${product.id}">
+        Add to Cart
+      </button>
+    `;
     productList.appendChild(li);
   });
+
+  // attach click handlers
+  document.querySelectorAll(".add-to-cart-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      addToCart(Number(btn.dataset.id));
+    });
+  });
 }
+
 
 // Render cart list
 function renderCart() {cartList.innerHTML = "";
