@@ -12,7 +12,7 @@ const productList = document.getElementById("product-list");
 const cartList = document.getElementById("cart-list");
 const clearCartBtn = document.getElementById("clear-cart-btn");
 
-// Render product list
+// Render products
 function renderProducts() {
   productList.innerHTML = "";
 
@@ -25,7 +25,6 @@ function renderProducts() {
     productList.appendChild(li);
   });
 
-  // Add click listeners AFTER rendering
   document.querySelectorAll("#product-list button").forEach((btn) => {
     btn.addEventListener("click", () => {
       addToCart(Number(btn.dataset.id));
@@ -33,10 +32,9 @@ function renderProducts() {
   });
 }
 
-// Render cart list (READ ONLY)
+// Render cart (READ ONLY)
 function renderCart() {
   cartList.innerHTML = "";
-
   const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
 
   cart.forEach((item) => {
@@ -46,14 +44,14 @@ function renderCart() {
   });
 }
 
-// Add item to cart (APPEND ONLY)
+// Add to cart (APPEND)
 function addToCart(productId) {
   const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+  const product = products.find(p => p.id === productId);
 
-  const product = products.find((p) => p.id === productId);
   cart.push(product);
-
   sessionStorage.setItem("cart", JSON.stringify(cart));
+
   renderCart();
 }
 
@@ -63,9 +61,7 @@ function clearCart() {
   renderCart();
 }
 
-// Clear cart button
 clearCartBtn.addEventListener("click", clearCart);
 
-// Initial render (DO NOT touch sessionStorage here)
-renderProducts();
-renderCart();
+// Initial render
+renderProducts(); // ✅ ONLY products
