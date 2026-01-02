@@ -48,13 +48,17 @@ function renderCart() {cartList.innerHTML = "";
   });}
 
 // Add item to cart
-function addToCart(productId) { const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-  const product = products.find((p) => p.id === productId);
+function addToCart(productId) { // ✅ Always read existing cart first
+  const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
 
+  const product = products.find(p => p.id === productId);
+
+  // ✅ Append product, do NOT replace cart
   cart.push(product);
+
   sessionStorage.setItem("cart", JSON.stringify(cart));
 
-  renderCart();}
+  renderCart(); }
 
 // Remove item from cart
 function removeFromCart(productId) {let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
